@@ -23,6 +23,10 @@
   copy: src=httpd.conf dest=/etc/httpd/conf/httpd.conf mode=0775 owner=root group=root
   notify: restart httpd
 
+- name: Change permissions
+  file: src={{UNZIP_DEST}} owner=root group=apache mode=0775 recurse=yes
+  notify: restart httpd
+
 - name: restart httpd
   service: name=httpd state=restarted
 
