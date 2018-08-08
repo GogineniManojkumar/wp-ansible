@@ -1,0 +1,6 @@
+---
+
+WP_SRC: https://wordpress.org/latest.tar.gz
+DEST_TMP: /tmp/wp-latest.tar.gz 
+UNZIP_DEST: /var/www/html/
+DOCROOT: /var/www/html/wordpress

@@ -1,0 +1,34 @@
+---
+- name: install httpd
+  yum: name={{ item }} state=present
+  with_items:
+   - httpd24
+   - httpd24-tools  
+  notify: restart httpd
+  
+- name: enable httpd service  
+  service: name=httpd enabled=yes
+
+- name: download wordpress file
+  get_url: url={{WP_SRC}} dest={{DEST_TMP}}
+
+- name: Extract wp-latest.tzr.gz to destination 
+  unarchive: src={{DEST_TMP}} dest={{UNZIP_DEST}}
+
+- name: copy httpd vhost conf file
+  copy: src=wp-vhost.conf dest=/etc/httpd/conf.d/wp-vhost.conf mode=0775 owner=root group=root
+  notify: restart httpd
+
+- name: copy httpd main conf file
+  copy: src=httpd.conf dest=/etc/httpd/conf/httpd.conf mode=0775 owner=root group=root
+  notify: restart httpd
+
+- name: restart httpd
+  service: name=httpd state=restarted
+
+
+
+
+
+
+
